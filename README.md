@@ -1,29 +1,111 @@
-# CLI-Esp32Marauder
-The ESP32Marauder Command Line Interface (CLI) allows developers to interact with the ESP32Marauder using a terminal
+# 🔥 CLI-Esp32Marauder
 
-# Requirement
-- Any Esp32 4MB Device, Recommend Esp32U
-- Laptop And Chrome Browser For Flashing
-- Internet Connection
+Talk to your **ESP32Marauder** like a hacker from a movie 🎬  
+No software. No drama. Just **Chrome + ESP32** 😎
 
-# How To FLash
-- Read Wiki [ESP32Marauder](https://github.com/justcallmekoko/ESP32Marauder/wiki/update-firmware) 
-- Download Firmware For 0x10000 [Esp32U](https://github.com/justcallmekoko/ESP32Marauder/releases/download/v1.2.1/esp32_marauder_v1_2_1_20250207_v6.bin) 
-- Download Bootloader For 0x1000 [Bootloader](https://github.com/justcallmekoko/ESP32Marauder/raw/master/FlashFiles/MarauderV4/esp32_marauder.ino.bootloader.bin) 
-- Download Partitions For 0x8000 [Partitions](https://github.com/justcallmekoko/ESP32Marauder/raw/master/FlashFiles/MarauderV4/esp32_marauder.ino.partitions.bin) 
-- Download Boot App For 0xE000 [Boot App](https://github.com/justcallmekoko/ESP32Marauder/raw/master/FlashFiles/FlipperZeroMultiBoardS3/boot_app0.bin) 
-- Open Web Flaser in Chrome [Flasher](https://esp.huhn.me/) 
+---
+
+## 🧰 Requirements (Simple Stuff)
+- ✅ Any **ESP32 (4MB)** — *ESP32U recommended*
+- 💻 Laptop / PC
+- 🌐 Chrome Browser (Desktop ONLY)
+- 🔌 USB Cable
+- 🧠 Brain (optional but useful)
+
+---
+
+## ⚡ How to Flash ESP32 (Don’t Skip 😅)
+
+Before using CLI, flash the firmware properly.
+
+📘 Official Wiki (Read this once):  
+👉 https://github.com/justcallmekoko/ESP32Marauder/wiki/update-firmware
+
+---
+
+### 📦 Download Required Files
+
+| File | Flash Address | Link |
+|----|----|----|
+| Firmware | `0x10000` | [Download](https://github.com/justcallmekoko/ESP32Marauder/releases/download/v1.2.1/esp32_marauder_v1_2_1_20250207_v6.bin) |
+| Bootloader | `0x1000` | [Download](https://github.com/justcallmekoko/ESP32Marauder/raw/master/FlashFiles/MarauderV4/esp32_marauder.ino.bootloader.bin) |
+| Partitions | `0x8000` | [Download](https://github.com/justcallmekoko/ESP32Marauder/raw/master/FlashFiles/MarauderV4/esp32_marauder.ino.partitions.bin) |
+| Boot App | `0xE000` | [Download](https://github.com/justcallmekoko/ESP32Marauder/raw/master/FlashFiles/FlipperZeroMultiBoardS3/boot_app0.bin) |
+
+---
+
+### 🌍 Web Flasher (Chrome Only)
+
+Open this in **Chrome Desktop**:  
+👉 https://esp.huhn.me/
+
 <p align="center">
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEHxYB3OP_ucyOGpoRY0oR-Z2XMoZLVXFDRWTcEafRlmoNuXsKt-jHYaKCl5v32QhyrGcQolZ9_JE52dEnibuBK2JL8XAon6htzstgI1wEknYulXyQb9QLgSRA01opPf1tJt_9WtQEYFJkLnKA6Q5q2WrrLOmAcx1-exTRELFLVH8M__2LeRmvOKItMDJ_/s16000/4.png"><br>
+  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEHxYB3OP_ucyOGpoRY0oR-Z2XMoZLVXFDRWTcEafRlmoNuXsKt-jHYaKCl5v32QhyrGcQolZ9_JE52dEnibuBK2JL8XAon6htzstgI1wEknYulXyQb9QLgSRA01opPf1tJt_9WtQEYFJkLnKA6Q5q2WrrLOmAcx1-exTRELFLVH8M__2LeRmvOKItMDJ_/s16000/4.png" width="700">
+</p>
 
-# How To Use
-- Now Open in Chrome Browser Our CLI Terminal For Use ESP32marauder [CLI Terminal](https://webcli-esp32marauder.netlify.app/)
-- Available Pre Command For WiFi Penetration
-- More Info Check Wiki [ESP32Marauder](https://github.com/justcallmekoko/ESP32Marauder/wiki/update-firmware) 
+> Plug ESP32 → Select files → Flash → Relax ☕  
+
+---
+
+## 🖥️ Use the Web CLI
+
+After flashing, open the CLI terminal:
+
+👉 **CLI Terminal**  
+🔗 https://webcli-esp32marauder.netlify.app/
+
 <p align="center">
+  <img src="https://github.com/user-attachments/assets/50b15624-a000-40b5-8a13-3098120755c0" width="700">
+</p>
 
-![Screenshot_10-1-2026_01754_webcli-esp32marauder netlify app](https://github.com/user-attachments/assets/50b15624-a000-40b5-8a13-3098120755c0)
+### Steps:
+1. Open site in **Chrome Desktop**
+2. Click **CONNECT**
+3. Select ESP32
+4. Type commands
+5. Watch terminal talk back 😏
 
-# Disclaimer
-<b>R0otpapa Provides no warranty with this software and will not be responsible for any direct or indirect damage caused due to the usage of this tool.<br>
-Esp32CLI is built for both Educational and Internal use ONLY.</b>
+---
+
+## 📱 Mobile Users (Read This or Cry Later 😭)
+
+❌ Mobile browsers do NOT support Web Serial API
+✔ UI + guides will open
+❌ ESP32 connection will FAIL
+
+👉 Use Chrome Desktop only
+
+## ⚠️ Disclaimer (Important!)
+
+This project is for EDUCATIONAL & INTERNAL use ONLY.
+
+❌ No illegal usage
+
+❌ No public attacks
+
+❌ No WiFi drama
+
+R0otpapa is NOT responsible if:
+
+Your WiFi stops
+
+Your ESP32 misbehaves
+
+Your friend gets disconnected 😬
+
+Use responsibly.
+
+❤️ Credits & Links
+
+🧠 ESP32Marauder by JustCallMeKoko
+👉 https://github.com/justcallmekoko/ESP32Marauder
+
+🧑‍💻 Web CLI & UI by R0otpapa
+
+🔴 YouTube:
+👉 https://youtu.be/MXmMG3ZiYYQ?si=dFbJ6h88LEuWFZeI
+
+📸 Instagram:
+👉 https://instagram.com/YOUR_INSTAGRAM
+
+<p align="center"> Made with ❤️, ☕ and late-night debugging <br> <b>— R0otpapa</b> </p>
