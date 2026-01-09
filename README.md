@@ -80,32 +80,28 @@ After flashing, open the CLI terminal:
 This project is for EDUCATIONAL & INTERNAL use ONLY.
 
 ❌ No illegal usage
-
 ❌ No public attacks
-
 ❌ No WiFi drama
 
 R0otpapa is NOT responsible if:
 
 Your WiFi stops
-
 Your ESP32 misbehaves
-
 Your friend gets disconnected 😬
 
 Use responsibly.
 
-❤️ Credits & Links
+## ❤️ Credits & Links
 
 🧠 ESP32Marauder by JustCallMeKoko
 👉 https://github.com/justcallmekoko/ESP32Marauder
 
-🧑‍💻 Web CLI & UI by R0otpapa
+### 🧑‍💻 Web CLI & UI by R0otpapa
 
 🔴 YouTube:
 👉 https://youtu.be/MXmMG3ZiYYQ?si=dFbJ6h88LEuWFZeI
 
 📸 Instagram:
-👉 https://instagram.com/YOUR_INSTAGRAM
+👉 https://www.instagram.com/metarunsharma666/
 
 <p align="center"> Made with ❤️, ☕ and late-night debugging <br> <b>— R0otpapa</b> </p>
