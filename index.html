@@ -1,156 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ESP32 Web Serial Terminal</title>
-  <style>
-    body {
-      font-family: 'Courier New', Courier, monospace;
-      background-color: #000000;
-      color: #efeeee;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESP32 Web Serial Terminal</title>
+<style>
+:root{
+  --bg:#050505;
+  --panel:#0f0f0f;
+  --pink:#ff2f92;
+  --green:#00ff9c;
+  --text:#ffffff;
+  --border:#222;
+}
+*{box-sizing:border-box;font-family:Consolas,monospace}
+body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
-    h1 {
-      color: #ff00c3;
-      margin: 10px 0;
-    }
+/* HEADER */
+header{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px;background:#080808;border-bottom:1px solid var(--border);
+}
+header h1{margin:0;color:var(--pink);font-size:16px}
+#menuBtn{display:none;background:none;border:none;color:var(--pink);font-size:22px;cursor:pointer}
+#topConnect{display:none;background:var(--pink);border:none;padding:6px 12px;font-weight:bold;cursor:pointer}
 
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #2e2d2e;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      position: relative;
-    }
+/* LAYOUT */
+#app{flex:1;display:grid;grid-template-columns:260px 1fr 260px;min-height:0}
 
-    .terminal {
-      width: 100%;
-      height: 300px;
-      background-color: #000;
-      color: rgb(255, 0, 200);
-      padding: 10px;
-      border-radius: 5px;
-      overflow-y: auto;
-      text-align: left;
-      font-size: 14px;
-      line-height: 1.5;
-      border: 1px solid #ff00aa;
-      white-space: pre-wrap;
-    }
+/* PANELS */
+.panel{padding:10px;border-right:1px solid var(--border);min-height:0}
+.panel.right{border-right:none;border-left:1px solid var(--border)}
+.title{text-align:center;color:var(--pink);margin-bottom:8px;font-weight:bold}
 
-    .command-container {
-      position: relative;
-      width: 100%;
-    }
+/* GUIDE */
+#search{width:100%;padding:8px;background:var(--panel);border:none;color:white}
+.guide-btn{width:100%;padding:8px;margin-top:6px;background:var(--panel);border:1px solid var(--border);color:var(--pink);cursor:pointer}
+.guide-btn:hover{background:var(--pink);color:black}
 
-    .command-input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ff00d4;
-      background-color: #333;
-      color: #00ddff;
-      font-size: 16px;
-      margin-top: 10px;
-    }
+/* TERMINAL */
+#terminal{background:black;padding:10px;color:var(--green);height:calc(100vh - 260px);overflow-y:auto;font-size:14px;white-space:pre-wrap;}
+#cmdbar{display:flex;gap:6px;margin-top:6px;position:relative}
+#cmd{flex:1;padding:10px;background:var(--panel);border:none;color:white}
+#send{background:var(--pink);border:none;padding:10px 18px;cursor:pointer}
 
-    .suggestions {
-      position: absolute;
-      width: 100%;
-      background-color: #333;
-      border: 1px solid #ff00d9;
-      color: white;
-      max-height: 150px;
-      overflow-y: auto;
-      border-radius: 5px;
-      display: none;
-      text-align: left;
-    }
+/* SUGGEST */
+#suggest{position:absolute;bottom:46px;left:0;right:0;background:#111;border:1px solid var(--border);display:none;z-index:50}
+#suggest div{padding:6px;cursor:pointer}
+#suggest div:hover{background-color:var(--pink);color:black}
 
-    .suggestion {
-      padding: 10px;
-      cursor: pointer;
-    }
+/* DEVICE */
+.info{white-space:pre-line;font-size:14px;margin-bottom:10px}
+#connect{width:100%;padding:10px;background:var(--pink);border:none;font-weight:bold;cursor:pointer}
 
-    .suggestion:hover {
-      background-color: #e100ff;
-    }
+/* WALKTHROUGH */
+#guide{background:var(--panel);padding:10px;height:260px;overflow:auto;font-size:13px;white-space:pre-line}
 
-    button {
-      background-color: #ff00fb;
-      color: white;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+/* POPUP */
+#popup{
+  position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;z-index:200;
+}
+#popupBox{
+  background:#111;padding:15px;width:90%;max-width:420px;
+  border:1px solid var(--border);border-radius:8px;
+}
+#popupBox h3{color:var(--pink)}
+#popupBox button{margin-top:10px;padding:6px 12px;background:var(--pink);border:none;color:black;cursor:pointer}
 
-    button:hover {
-      background-color: #c707a0;
-    }
+/* FOOTER */
+footer{background:#080808;border-top:1px solid var(--border);padding:10px;text-align:center;font-size:13px}
+footer a{color:var(--pink);margin:0 8px;text-decoration:none}
 
-    /* Styling for Text */
-    .made-by {
-      color: red;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .credit {
-      background: linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(0,204,255,1) 100%);
-      -webkit-background-clip: text;
-      color: transparent;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
-  </style>
+/* MOBILE */
+@media(max-width:900px){
+  #app{grid-template-columns:1fr}
+  .panel.left{display:none}
+  .panel.right{display:none}
+  #menuBtn,#topConnect{display:block}
+  #connect{display:none}
+}
+</style>
 </head>
 <body>
 
-  <!-- Title -->
-  <h1>ESP32 Web Serial Terminal</h1>
+<header>
+  <button id="menuBtn">☰</button>
+  <h1>ESP32 Web Serial</h1>
+  <button id="topConnect">CONNECT</button>
+</header>
 
-  <!-- Made By R0otpapa (Below Title) -->
-  <div class="made-by">Made By R0otpapa</div>
+<div id="app">
+<div class="panel left" id="guidePanel">
+  <div class="title">COMMAND GUIDE</div>
+  <input id="search" placeholder="Search">
+  <div id="guideList"></div>
+</div>
 
-  <!-- All Credit ESP32Marauder Team (Below "Made By R0otpapa") -->
-  <div class="credit">All Credit ESP32Marauder Team</div>
-
-  <div class="container">
-    <!-- Connection Button -->
-    <button onclick="connectSerial()">Connect to ESP32</button>
-
-    <!-- Terminal Display -->
-    <div id="terminal" class="terminal">Waiting for connection...</div>
-
-    <!-- Command Input with Suggestions -->
-    <div class="command-container">
-      <input type="text" id="commandInput" class="command-input" placeholder="Type a command..." oninput="showSuggestions()" onkeypress="handleKeyPress(event)">
-      <div id="suggestions" class="suggestions"></div>
-    </div>
-
-    <button onclick="sendCommand()">Send Command</button>
+<div class="panel">
+  <div class="title">TERMINAL</div>
+  <div id="terminal">&gt; Ready</div>
+  <div id="cmdbar">
+    <input id="cmd" placeholder="Type command">
+    <button id="send">SEND</button>
+    <div id="suggest"></div>
   </div>
+</div>
 
-  <script>
-    let port;
-    let writer;
-    let reader;
-    let decoder = new TextDecoder();
-    let encoder = new TextEncoder();
+<div class="panel right">
+  <div class="title">DEVICE INFO</div>
+  <div id="info" class="info">Disconnected</div>
+  <button id="connect">CONNECT</button>
+  <div class="title" style="margin-top:10px;">WALKTHROUGH</div>
+  <div id="guide">Select a topic</div>
+</div>
+</div>
 
-// List of suggested commands
-const commandList = [
+<footer>
+  Made by <b>R0otpapa</b> |
+  <a href="https://github.com/YOUR_GITHUB">GitHub</a>
+  <a href="https://instagram.com/YOUR_INSTAGRAM">Instagram</a>
+</footer>
+
+<div id="popup">
+  <div id="popupBox">
+    <h3 id="popTitle"></h3>
+    <p id="popText"></p>
+    <div id="popupGuideList"></div>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<script>
+/* ===== GUIDES ===== */
+const guides={
+  "Scan":"Wireless scanning concept (educational).\nStep 1: Scan for APs\nStep 2: Analyze signals\nStep 3: Save results",
+  "Handshake":"WiFi handshake explained.\nStep 1: Monitor mode\nStep 2: Capture handshake\nStep 3: Analyze",
+  "Deauth":"Deauthentication theory.\nStep 1: Identify target\nStep 2: Send deauth frames",
+  "BLE":"Bluetooth LE basics.\nStep 1: Scan devices\nStep 2: Capture advertising",
+  "EvilPortal":"Captive portal setup & theory.\nStep 1: Configure AP\nStep 2: Host portal\nStep 3: Capture credentials",
+  "Sniffing":"Handshake capture explained.\nStep 1: Monitor mode\nStep 2: Capture handshake file\nStep 3: Analyze"
+};
+
+const guideList=document.getElementById("guideList");
+const guide=document.getElementById("guide");
+const popup=document.getElementById("popup");
+const popTitle=document.getElementById("popTitle");
+const popText=document.getElementById("popText");
+const popupGuideList=document.getElementById("popupGuideList");
+
+/* LOAD SIDEBAR GUIDE */
+function loadGuides(){
+  guideList.innerHTML="";
+  Object.keys(guides).forEach(k=>{
+    const btn=document.createElement("button");
+    btn.className="guide-btn";
+    btn.textContent=k;
+    btn.onclick=()=>openGuide(k);
+    guideList.appendChild(btn);
+  });
+}
+loadGuides();
+
+/* OPEN GUIDE */
+function openGuide(key){
+  guide.textContent=guides[key];
+  popTitle.textContent=key;
+  popText.textContent=guides[key];
+  popupGuideList.innerHTML="";
+  if(window.innerWidth<900){
+    Object.keys(guides).forEach(k=>{
+      const b=document.createElement("button");
+      b.textContent=k;
+      b.className="guide-btn";
+      b.onclick=()=>openGuide(k);
+      popupGuideList.appendChild(b);
+    });
+    popup.style.display="flex";
+  }
+}
+
+/* CLOSE POPUP */
+function closePopup(){popup.style.display="none"}
+
+/* MOBILE MENU BUTTON */
+const menuBtn=document.getElementById("menuBtn");
+menuBtn.onclick=()=>openGuide("Scan");
+
+/* SEARCH FILTER */
+const searchInput=document.getElementById("search");
+searchInput.oninput=()=> {
+  const val=searchInput.value.toLowerCase();
+  document.querySelectorAll(".guide-btn").forEach(b=>{
+    b.style.display=b.textContent.toLowerCase().includes(val)?"block":"none";
+  });
+}
+
+/* ===== TERMINAL & COMMANDS ===== */
+const commands=[
   "help", "scanap", "stopscan", "list -a", "save -a 0",
   "evilportal -c start", "clearlist -a", "attack -t deauth",
   "blespam -t all", "sniffraw", "select -a",
@@ -158,105 +205,85 @@ const commandList = [
   "evilportal -c start -w Better_Google_Mobile.html",
   "ssid -a -n R0otPaPa", "reboot", "select -s", "ls /",
 ];
+const cmd=document.getElementById("cmd");
+const suggest=document.getElementById("suggest");
+const terminal=document.getElementById("terminal");
 
-    async function connectSerial() {
-      try {
-        port = await navigator.serial.requestPort();
-        await port.open({ baudRate: 115200 });
+function log(t){
+  terminal.innerText += `\n> ${t}`;
+  terminal.scrollTop = terminal.scrollHeight;
+}
 
-        writer = port.writable.getWriter();
-        reader = port.readable.getReader();
+/* SUGGESTION */
+cmd.oninput=()=> {
+  suggest.innerHTML="";
+  const val=cmd.value.toLowerCase();
+  if(!val){suggest.style.display="none";return;}
+  commands.filter(c=>c.startsWith(val)).forEach(c=>{
+    const d=document.createElement("div");
+    d.textContent=c;
+    d.onclick=()=>{cmd.value=c;suggest.style.display="none";}
+    suggest.appendChild(d);
+  });
+  suggest.style.display="block";
+};
 
-        updateTerminal("Connected to ESP32\n");
+/* SEND COMMAND */
+document.getElementById("send").onclick=async()=>{
+  if(!cmd.value || !connected) return;
+  log(cmd.value);
+  const data=new TextEncoder().encode(cmd.value+"\n");
+  await writer.write(data);
 
-        listenToSerial();
-      } catch (error) {
-        alert("Connection failed: " + error.message);
-      }
-    }
+  if(cmd.value==="clear") terminal.innerText="";
+  cmd.value="";
+  suggest.style.display="none";
+};
+cmd.onkeydown=e=>{if(e.key==="Enter")document.getElementById("send").click()}
 
-    async function listenToSerial() {
-      try {
-        while (port.readable) {
-          const { value, done } = await reader.read();
-          if (done) {
-            break;
-          }
-          const text = decoder.decode(value);
-          updateTerminal(text);
-        }
-      } catch (error) {
-        console.error("Error reading serial data: ", error);
-      }
-    }
+/* ===== SERIAL CONNECT ===== */
+let port,reader,writer,connected=false;
+const connect=document.getElementById("connect");
+const topConnect=document.getElementById("topConnect");
 
-    async function sendCommand() {
-      const commandInput = document.getElementById("commandInput");
-      const command = commandInput.value.trim();
-      if (!command) return;
+async function toggleConnect(){
+  if(connected){
+    reader.releaseLock();writer.releaseLock();
+    await port.close();
+    connected=false;
+    info.textContent="Disconnected";
+    connect.textContent=topConnect.textContent="CONNECT";
+    log("Disconnected");
+    return;
+  }
+  try{
+    port=await navigator.serial.requestPort();
+    await port.open({baudRate:115200});
+    writer=port.writable.getWriter();
+    reader=port.readable.getReader();
+    connected=true;
+    const i=port.getInfo();
+    info.textContent=`Device: ESP32\nVID: ${i.usbVendorId||"N/A"}\nPID: ${i.usbProductId||"N/A"}\nBaud:115200\nStatus:CONNECTED`;
+    connect.textContent=topConnect.textContent="DISCONNECT";
+    log("Connected");
+    readLoop();
+  }catch(e){alert("Connection failed: "+e)}
+}
 
-      updateTerminal(`\n> ${command}`);
+connect.onclick=toggleConnect;
+topConnect.onclick=toggleConnect;
 
-      const data = encoder.encode(command + "\n");
-      await writer.write(data);
-
-      commandInput.value = "";
-      hideSuggestions(); // Hide suggestions after sending command
-    }
-
-    function handleKeyPress(event) {
-      if (event.key === "Enter") {
-        sendCommand();
-      }
-    }
-
-    function updateTerminal(text) {
-      const terminal = document.getElementById("terminal");
-      terminal.innerHTML += text;
-      terminal.scrollTop = terminal.scrollHeight;  // Auto-scroll to bottom
-    }
-
-    function showSuggestions() {
-      const input = document.getElementById("commandInput").value.toLowerCase();
-      const suggestionsBox = document.getElementById("suggestions");
-      suggestionsBox.innerHTML = "";
-      if (!input) {
-        suggestionsBox.style.display = "none";
-        return;
-      }
-
-      const filteredCommands = commandList.filter(cmd => cmd.startsWith(input));
-      if (filteredCommands.length === 0) {
-        suggestionsBox.style.display = "none";
-        return;
-      }
-
-      filteredCommands.forEach(command => {
-        const div = document.createElement("div");
-        div.classList.add("suggestion");
-        div.textContent = command;
-        div.onclick = () => selectCommand(command);
-        suggestionsBox.appendChild(div);
-      });
-
-      suggestionsBox.style.display = "block";
-    }
-
-    function selectCommand(command) {
-      document.getElementById("commandInput").value = command;
-      hideSuggestions();
-    }
-
-    function hideSuggestions() {
-      document.getElementById("suggestions").style.display = "none";
-    }
-
-    document.addEventListener("click", (event) => {
-      if (!event.target.classList.contains("suggestion")) {
-        hideSuggestions();
-      }
-    });
-  </script>
-
+async function readLoop(){
+  while(connected){
+    try{
+      const {value,done}=await reader.read();
+      if(done)break;
+      const text=new TextDecoder().decode(value).replace(/\r/g,"");
+      terminal.innerText += text;
+      terminal.scrollTop=terminal.scrollHeight;
+    }catch(e){console.error(e); break;}
+  }
+}
+</script>
 </body>
 </html>
