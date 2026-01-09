@@ -17,7 +17,6 @@ The ESP32Marauder Command Line Interface (CLI) allows developers to interact wit
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEHxYB3OP_ucyOGpoRY0oR-Z2XMoZLVXFDRWTcEafRlmoNuXsKt-jHYaKCl5v32QhyrGcQolZ9_JE52dEnibuBK2JL8XAon6htzstgI1wEknYulXyQb9QLgSRA01opPf1tJt_9WtQEYFJkLnKA6Q5q2WrrLOmAcx1-exTRELFLVH8M__2LeRmvOKItMDJ_/s16000/4.png"><br>
 
 # How To Use
-# How To Use
 - Now Open in Chrome Browser Our CLI Terminal For Use ESP32marauder [CLI Terminal](https://webcli-esp32marauder.netlify.app/)
 - Available Pre Command For WiFi Penetration
 - More Info Check Wiki [ESP32Marauder](https://github.com/justcallmekoko/ESP32Marauder/wiki/update-firmware) 
