@@ -134,11 +134,12 @@ footer a{color:var(--pink);margin:0 8px;text-decoration:none}
 <script>
 /* ===== GUIDES ===== */
 const guides={
-  "Scan":"Wireless scanning concept (educational).\nStep 1: Scan for APs\nStep 2: Analyze signals\nStep 3: Save results",
+  "Scan":"Wireless scanning concept (educational).\nStep 1: scanap\nStep 2: stopscan\nStep 3: list -a",
   "Handshake":"WiFi handshake explained.\nStep 1: Monitor mode\nStep 2: Capture handshake\nStep 3: Analyze",
-  "Deauth":"Deauthentication theory.\nStep 1: Identify target\nStep 2: Send deauth frames",
-  "BLE":"Bluetooth LE basics.\nStep 1: Scan devices\nStep 2: Capture advertising",
-  "EvilPortal":"Captive portal setup & theory.\nStep 1: scanap\nStep 2: stopscan\nStep 3: list -a\nStep 4: select -a <no>\nStep 5: evilportal -c start -w Better_Google_Mobile.html",
+  "Beacon Spam AP":"Creat fake copies an AP. \n Step 1: scanap\nStep 2: stopscan\nStep 3: list -a\nStep 4: select -a <no>\nStep 5: attack -t beacon -a\n attack stop: stopscan",
+  "Deauth":"Deauthentication.\nStep 1: scanap\nStep 2: stopscan\nStep 3: list -a\nStep 4: select -a <no>\nStep 5: attack -t deauth -c\n attack stop: stopscan\n\n\nTarget selected APs: [attack -t deauth]\nTarget selected APs and Stations: [attack -t deauth -c]\nManually specify Source MAC: [attack -t deauth -s AA:BB:CC:DD:EE:FF]\nManually specify source and destination: [attack -t deauth -s AA:BB:CC:DD:EE:FF -d AA:BB:CC:DD:EE:FF]",
+  "BLE":"Bluetooth LE basics.\nStep 1: Scan devices\nStep 2: Capture advertising\nblespam -t windows",
+  "EvilPortal":"Captive portal setup.\nStep 1: scanap\nStep 2: stopscan\nStep 3: list -a\nStep 4: select -a <no>\nStep 5: evilportal -c start -w Better_Google_Mobile.html\n attack stop: stopscan\n\n\n[evilportal -c start]: Start evil portal with default index.html file as the HTML\n[evilportal -c sethtml apple.html]: Set the active HTML as apple.html\n[evilportal -c start -w CoxWifi.html]: Start evil portal with CoxWifi.html as the HTML\n[evilportal -c setap <ap index>]: Set the ESSID of the rogue AP based off of your AP list at",
   "Sniffing":"Handshake capture explained.\nStep 1: Monitor mode\nStep 2: Capture handshake file\nStep 3: Analyze"
 };
 
