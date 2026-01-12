@@ -7,6 +7,7 @@ No software. No drama. Just **Chrome + ESP32** 😎
 
 ## 🧰 Requirements (Simple Stuff)
 - ✅ Any **ESP32 (4MB)** — *ESP32U recommended*
+- 🃏 Micro SD Card Reader Module
 - 💻 Laptop / PC
 - 🌐 Chrome Browser (Desktop ONLY)
 - 🔌 USB Cable
@@ -46,6 +47,9 @@ Open this in **Chrome Desktop**:
 > Plug ESP32 → Select files → Flash → Relax ☕  
 
 ---
+### SDCard Module Connection
+![WhatsApp Image 2026-01-12 at 4 35 11 PM](https://github.com/user-attachments/assets/527aca0b-156a-4dd2-866a-b32b9a88abc2)
+
 
 ## 🖥️ Use the Web CLI
 
