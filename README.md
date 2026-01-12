@@ -7,7 +7,9 @@ No software. No drama. Just **Chrome + ESP32** 😎
 
 ## 🧰 Requirements (Simple Stuff)
 - ✅ Any **ESP32 (4MB)** — *ESP32U recommended*
+- 👉 https://robu.in/product/esp32-38pin-development-board-wifibluetooth-ultra-low-power-consumption-dual-core/
 - 🃏 Micro SD Card Reader Module
+- 👉 https://amzn.in/d/2sz5lXE
 - 💻 Laptop / PC
 - 🌐 Chrome Browser (Desktop ONLY)
 - 🔌 USB Cable
@@ -47,8 +49,9 @@ Open this in **Chrome Desktop**:
 > Plug ESP32 → Select files → Flash → Relax ☕  
 
 ---
-### SDCard Module Connection
-![WhatsApp Image 2026-01-12 at 4 35 11 PM](https://github.com/user-attachments/assets/527aca0b-156a-4dd2-866a-b32b9a88abc2)
+### 🃏 MicroSDCard Reader Module Connect to ESP32-WROOM-32
+
+![WhatsApp Image 2026-01-12 at 5 01 14 PM](https://github.com/user-attachments/assets/04910eb8-fe54-4b9a-beef-f1eb320bdd59)
 
 
 ## 🖥️ Use the Web CLI
